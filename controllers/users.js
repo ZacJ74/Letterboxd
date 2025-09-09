@@ -1,5 +1,5 @@
 // --- Module and Package Imports ---
-const User = require('../models/User'); // Import the User model
+const User = require('../models/User.js'); // Import the User model
 const bcrypt = require('bcryptjs'); // Import bcrypt for password comparison
 
 // --- Controller Functions ---
