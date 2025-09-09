@@ -30,8 +30,7 @@ userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();
 
     try {
-        // Generate a salt with a cost factor of 10.
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(10); // generates a unique, random salt for this specific user, in this case with the cost factor of ten
         // Hash the password with the generated salt.
         this.password = await bcrypt.hash(this.password, salt);
         next();
@@ -41,6 +40,7 @@ userSchema.pre('save', async function(next) {
 });
 
 // --- Method to Compare Passwords ---
+
 // A custom method to compare a given password with the hashed password in the database.
 userSchema.methods.comparePassword = async function(candidatePassword) {
     // Use bcrypt's compare method to check the password.
