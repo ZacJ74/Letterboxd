@@ -25,7 +25,7 @@ const signup = async (req, res) => {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             // If the user exists, redirect back to the signup form with an error message.
-            // We'll add error handling and messaging in the view later.
+            
             return res.redirect('/signup');
         }
 
