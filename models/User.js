@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-    // The password field is a string and is required.
+    
     password: {
         type: String,
         required: true

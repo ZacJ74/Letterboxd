@@ -37,7 +37,7 @@ app.use(express.static('public')); // Serves static files from the 'public' dire
 // --- Session Middleware ---
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || 'your-secret-key', // Secret key for signing the session ID cookie
+        secret: process.env.SESSION_SECRET || 'fine-then-keep-your-secrets', // Secret key for signing the session ID cookie
         resave: false, // Prevents session from being re-saved if it wasn't modified
         saveUninitialized: true, // Saves uninitialized sessions
         store: MongoStore.create({ mongoUrl: dbUri }), // Stores session data in MongoDB
@@ -56,7 +56,6 @@ app.use('/users', usersRouter);
 
 // --- Root Route ---
 
-// A simple route to test if the server is working
 app.get('/', (req, res) => {
     res.send('<h1>Server is running!</h1>');
 });
