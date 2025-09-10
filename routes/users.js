@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 
 // --- GET Auth Form (Login/Signup) ---
 router.get('/auth', (req, res) => {
-    // PASS a title variable to the view
     res.render('auth-form', { message: null, title: 'Login or Sign Up' });
 });
 
@@ -15,18 +14,18 @@ router.post('/signup', async (req, res) => {
     try {
         const existingUser = await User.findOne({ username });
         if (existingUser) {
-            // PASS a title variable to the view
-            return res.render('auth-form', { message: 'Username already taken.', title: 'Login or Sign Up' });
+            return res.render('auth-form', { 
+                message: 'Username already taken.', 
+                title: 'Login or Sign Up' 
+            });
         }
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({
-            username,
-            password: hashedPassword
-        });
+        const newUser = new User({ username, password: hashedPassword });
         await newUser.save();
-        // Set user session and redirect
+
+        // Set session + redirect
         req.session.userId = newUser._id;
-        // CRITICAL FIX: Only redirect AFTER the session is saved.
         req.session.save((err) => {
             if (err) {
                 console.error('Session save error:', err);
@@ -46,17 +45,22 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (!user) {
-            // PASS a title variable to the view
-            return res.render('auth-form', { message: 'Invalid username or password.', title: 'Login or Sign Up' });
+            return res.render('auth-form', { 
+                message: 'Invalid username or password.', 
+                title: 'Login or Sign Up' 
+            });
         }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            // PASS a title variable to the view
-            return res.render('auth-form', { message: 'Invalid username or password.', title: 'Login or Sign Up' });
+            return res.render('auth-form', { 
+                message: 'Invalid username or password.', 
+                title: 'Login or Sign Up' 
+            });
         }
-        // Set user session and redirect
+
+        // Set session + redirect
         req.session.userId = user._id;
-        // CRITICAL FIX: Only redirect AFTER the session is saved.
         req.session.save((err) => {
             if (err) {
                 console.error('Session save error:', err);
@@ -70,8 +74,8 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// --- GET Logout ---
-router.get('/logout', (req, res) => {
+// --- POST Logout (updated to match your forms) ---
+router.post('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
             return res.status(500).send('Could not log out.');

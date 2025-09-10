@@ -9,9 +9,10 @@
 <body>
     <header>
         <nav>
-            <a href="/movies/dashboard">Dashboard</a>
+            <a href="/">Dashboard</a>
             <a href="/movies/new">New Movie</a>
-            <form action="/users/logout" method="POST">
+            <!-- Logout should stay POST since it's state-changing -->
+            <form action="/users/logout" method="POST" style="display:inline;">
                 <button type="submit">Log Out</button>
             </form>
         </nav>
@@ -27,7 +28,7 @@
 
         <h2>My Movies</h2>
         
-        <% if (movies.length > 0) { %>
+        <% if (movies && movies.length > 0) { %>
             <ul>
                 <% movies.forEach(movie => { %>
                     <li>
