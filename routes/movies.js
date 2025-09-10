@@ -13,7 +13,7 @@ function isLoggedIn(req, res, next) {
 }
 
 
-// RESTful Routes for Movies --------------------------------
+// -------------------------------- RESTful Routes for Movies --------------------------------
 
 // Index Route: GET /movies
 router.get('/', isLoggedIn, moviesController.getDashboard);
