@@ -1,21 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const moviesController = require('../controllers/movies');
-const requireLogin = require('../middleware/requireLogin');
-const requireOwner = require('../middleware/requireOwner');
+const { isLoggedIn } = require('../middleware/auth');
 
-// CREATE new movie (auth required)
-router.get('/new', requireLogin, moviesController.getNewMovieForm);
-router.post('/', requireLogin, moviesController.createMovie);
+// Dashboard (root)
+router.get('/', isLoggedIn, moviesController.getDashboard);
 
-// READ single movie (auth required)
-router.get('/:id', requireLogin, moviesController.getMovieDetails);
+// Show new movie form
+router.get('/new', isLoggedIn, moviesController.showNewForm);
 
-// UPDATE (auth + ownership required)
-router.get('/:id/edit', requireLogin, requireOwner, moviesController.getEditMovieForm);
-router.put('/:id', requireLogin, requireOwner, moviesController.updateMovie);
+// Create movie
+router.post('/', isLoggedIn, moviesController.createMovie);
 
-// DELETE (auth + ownership required)
-router.delete('/:id', requireLogin, requireOwner, moviesController.deleteMovie);
+// Show single movie
+router.get('/:id', isLoggedIn, moviesController.showMovie);
+
+// Show edit form
+router.get('/:id/edit', isLoggedIn, moviesController.showEditForm);
+
+// Update movie
+router.put('/:id', isLoggedIn, moviesController.updateMovie);
+
+// Delete movie
+router.delete('/:id', isLoggedIn, moviesController.deleteMovie);
 
 module.exports = router;

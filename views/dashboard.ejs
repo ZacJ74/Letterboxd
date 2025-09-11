@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard</title>
-    <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/">Dashboard</a>
-            <a href="/movies/new">New Movie</a>
-            <!-- Logout should stay POST since it's state-changing -->
-            <form action="/users/logout" method="POST" style="display:inline;">
-                <button type="submit">Log Out</button>
-            </form>
-        </nav>
-    </header>
-    <main>
-        <h1>Welcome to your Dashboard!</h1>
-        
-        <% if (message) { %>
-            <div class="success-message">
-                <%= message %>
-            </div>
-        <% } %>
+  <header>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/movies/new">New Movie</a>
 
-        <h2>My Movies</h2>
-        
-        <% if (movies && movies.length > 0) { %>
-            <ul>
-                <% movies.forEach(movie => { %>
-                    <li>
-                        <h3><a href="/movies/<%= movie._id %>"><%= movie.title %></a></h3>
-                        <p><strong>Year:</strong> <%= movie.year %></p>
-                        <p><strong>Rating:</strong> <%= movie.rating %> / 5</p>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } else { %>
-            <p>You haven't added any movies yet. <a href="/movies/new">Add one now!</a></p>
-        <% } %>
-    </main>
+      <% if (userId) { %>
+        <form action="/users/logout" method="POST" style="display:inline;">
+          <button type="submit">Log Out</button>
+        </form>
+      <% } else { %>
+        <a href="/users/auth?mode=login">Login / Sign Up</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Welcome to your Dashboard!</h1>
+
+    <% if (message) { %>
+      <div class="success-message">
+        <%= message %>
+      </div>
+    <% } %>
+
+    <h2>My Movies</h2>
+
+    <% if (movies && movies.length > 0) { %>
+      <ul>
+        <% movies.forEach(movie => { %>
+          <li>
+            <h3><a href="/movies/<%= movie._id %>"><%= movie.title %></a></h3>
+            <p><strong>Year:</strong> <%= movie.year %></p>
+            <p><strong>Rating:</strong> <%= movie.rating %> / 5</p>
+            <a href="/movies/<%= movie._id %>/edit">Edit</a> |
+            <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          </li>
+        <% }); %>
+      </ul>
+    <% } else { %>
+      <p>You haven't added any movies yet. <a href="/movies/new">Add one now!</a></p>
+    <% } %>
+  </main>
 </body>
 </html>

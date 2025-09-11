@@ -1,155 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4a5568;
-            --secondary-color: #a0aec0;
-            --background-color: #2d3748;
-            --card-background: #4a5568;
-            --text-color: #e2e8f0;
-            --input-bg: #2d3748;
-            --button-bg: #a0aec0;
-            --button-text: #2d3748;
-            --border-radius: 8px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .auth-container {
-            background-color: var(--card-background);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            margin-top: 1.5rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .input-group label {
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: var(--input-bg);
-            border: 1px solid var(--secondary-color);
-            border-radius: var(--border-radius);
-            color: var(--text-color);
-        }
-
-        .auth-button {
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            padding: 0.75rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .auth-button:hover {
-            background-color: #cbd5e0;
-        }
-        
-        .toggle-link {
-            font-size: 0.875rem;
-            margin-top: 1rem;
-            color: var(--secondary-color);
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
-        h1 {
-            font-weight: 700;
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        p {
-            font-size: 1rem;
-            color: var(--secondary-color);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Reel Keeper</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div class="auth-container">
-     <!-- Login Form -->
-<form id="login-form" class="auth-form" action="/users/login" method="POST">
-    <div class="input-group">
-        <label for="login-username">Username</label>
-        <input type="text" id="login-username" name="username" placeholder="yourusername" required>
-    </div>
-    <div class="input-group">
-        <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="password" required>
-    </div>
-    <button type="submit" class="auth-button">Login</button>
-</form>
-...
-<!-- Signup Form -->
-<form id="signup-form" class="auth-form" action="/users/signup" method="POST">
-    <div class="input-group">
-        <label for="signup-username">Username</label>
-        <input type="text" id="signup-username" name="username" placeholder="yourusername" required>
-    </div>
-    <div class="input-group">
-        <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" name="password" required>
-    </div>
-    <button type="submit" class="auth-button">Sign Up</button>
-</form>
+  <main>
+    <h1><%= title %></h1>
+    <% if (message) { %><p style="color:red"><%= message %></p><% } %>
 
-            <p class="toggle-link" onclick="toggleForm()">Already have an account? Login</p>
-        </div>
-    </div>
-    
-    <script>
-        // Simple function to toggle between login and signup forms
-        function toggleForm() {
-            const loginContainer = document.getElementById('login-form-container');
-            const signupContainer = document.getElementById('signup-form-container');
-            
-            if (loginContainer.style.display === 'block' || loginContainer.style.display === '') {
-                loginContainer.style.display = 'none';
-                signupContainer.style.display = 'block';
-            } else {
-                loginContainer.style.display = 'block';
-                signupContainer.style.display = 'none';
-            }
-        }
-    </script>
+    <form action="/users/<%= mode %>" method="POST">
+      <label>Username</label>
+      <input type="text" name="username" required><br>
+      <label>Password</label>
+      <input type="password" name="password" required><br>
+      <button type="submit"><%= title %></button>
+    </form>
+
+    <% if (mode === 'signup') { %>
+      <p>Already have an account? <a href="/users/auth?mode=login">Login</a></p>
+    <% } else { %>
+      <p>Need an account? <a href="/users/auth?mode=signup">Sign Up</a></p>
+    <% } %>
+  </main>
 </body>
 </html>
+

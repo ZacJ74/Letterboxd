@@ -1,87 +1,55 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const User = require('../models/User');
 
-// --- GET Auth Form (Login/Signup) ---
+// GET auth page
 router.get('/auth', (req, res) => {
-    res.render('auth-form', { message: null, title: 'Login or Sign Up' });
+  const mode = req.query.mode === 'signup' ? 'signup' : 'login';
+  const title = mode === 'signup' ? 'Sign Up' : 'Login';
+  res.render('auth-form', { mode, title, message: null });
 });
 
-// --- POST Signup ---
+// POST signup
 router.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.render('auth-form', { 
-                message: 'Username already taken.', 
-                title: 'Login or Sign Up' 
-            });
-        }
+  const { username, password } = req.body;
+  try {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) return res.render('auth-form', { mode: 'signup', title: 'Sign Up', message: 'Username taken' });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, password: hashedPassword });
-        await newUser.save();
+    const hashed = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, password: hashed });
+    await newUser.save();
 
-        // Set session + redirect
-        req.session.userId = newUser._id;
-        req.session.save((err) => {
-            if (err) {
-                console.error('Session save error:', err);
-                return res.status(500).send('Session save failed');
-            }
-            res.redirect('/movies');
-        });
-    } catch (error) {
-        console.error('Signup error:', error);
-        res.status(500).send('An error occurred during signup.');
-    }
+    req.session.userId = newUser._id;
+    req.session.save(() => res.redirect('/'));
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error during signup');
+  }
 });
 
-// --- POST Login ---
+// POST login
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.render('auth-form', { 
-                message: 'Invalid username or password.', 
-                title: 'Login or Sign Up' 
-            });
-        }
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    if (!user) return res.render('auth-form', { mode: 'login', title: 'Login', message: 'Invalid username or password' });
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.render('auth-form', { 
-                message: 'Invalid username or password.', 
-                title: 'Login or Sign Up' 
-            });
-        }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.render('auth-form', { mode: 'login', title: 'Login', message: 'Invalid username or password' });
 
-        // Set session + redirect
-        req.session.userId = user._id;
-        req.session.save((err) => {
-            if (err) {
-                console.error('Session save error:', err);
-                return res.status(500).send('Session save failed');
-            }
-            res.redirect('/movies');
-        });
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).send('An error occurred during login.');
-    }
+    req.session.userId = user._id;
+    req.session.save(() => res.redirect('/'));
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error during login');
+  }
 });
 
-// --- POST Logout (updated to match your forms) ---
+// POST logout
 router.post('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.status(500).send('Could not log out.');
-        }
-        res.redirect('/users/auth');
-    });
+  req.session.destroy(() => res.redirect('/users/auth?mode=login'));
 });
 
 module.exports = router;
