@@ -162,6 +162,3 @@ OtherUser's Watchlist:
 
 ---
 
-I can also make a **more visual diagram for the route flow**, using arrows and blocks, that looks great in a README and shows how the dashboard, community page, and movie CRUD pages link together.
-
-Do you want me to make that visual route flow diagram?
