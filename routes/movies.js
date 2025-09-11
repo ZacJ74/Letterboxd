@@ -5,6 +5,7 @@ const { isLoggedIn } = require('../middleware/auth');
 
 // Dashboard / list movies
 router.get('/', isLoggedIn, moviesController.getDashboard);
+router.get('/community', isLoggedIn, moviesController.getCommunity);
 
 // Show new movie form
 router.get('/new', isLoggedIn, moviesController.showNewForm);

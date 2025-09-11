@@ -1,15 +1,44 @@
 const Movie = require('../models/Movie');
 
-// --- Dashboard / List Movies ---
+// --- Dashboard: shows only logged-in user’s movies ---
 exports.getDashboard = async (req, res) => {
+  if (!req.session.userId) return res.redirect('/users/auth?mode=login');
+
   try {
     const movies = await Movie.find({ owner: req.session.userId }).sort({ createdAt: -1 });
     res.render('dashboard', { movies, userId: req.session.userId, message: null });
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching dashboard movies:', err);
     res.status(500).send('Server error loading dashboard.');
   }
 };
+
+// --- Community: shows all movies ---
+
+exports.getCommunity = async (req, res) => {
+  if (!req.session.userId) return res.redirect('/users/auth?mode=login');
+
+  try {
+    // Fetch all movies, populate owner username
+    const movies = await Movie.find({})
+      .populate('owner', 'username')
+      .sort({ createdAt: -1 });
+
+    // Group movies by owner
+    const moviesByUser = {};
+    movies.forEach(movie => {
+      const username = movie.owner.username;
+      if (!moviesByUser[username]) moviesByUser[username] = [];
+      moviesByUser[username].push(movie);
+    });
+
+    res.render('movies/community', { moviesByUser, userId: req.session.userId });
+  } catch (err) {
+    console.error('Error fetching community movies:', err);
+    res.status(500).send('Server error loading community page.');
+  }
+};
+
 
 // --- Show New Movie Form ---
 exports.showNewForm = (req, res) => {
@@ -96,3 +125,6 @@ exports.deleteMovie = async (req, res) => {
     res.status(500).send('Error deleting movie.');
   }
 };
+
+
+
