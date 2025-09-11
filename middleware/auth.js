@@ -1,7 +1,12 @@
-// Middleware to protect routes
+// middleware/auth.js
+
 function isLoggedIn(req, res, next) {
-  if (req.session.userId) return next();
-  res.redirect('/users/auth?mode=login');
+  if (req.session && req.session.userId) {
+    return next();
+  } else {
+    // Redirect guests to login
+    return res.redirect('/users/auth?mode=login');
+  }
 }
 
 module.exports = { isLoggedIn };

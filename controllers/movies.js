@@ -1,22 +1,12 @@
 const Movie = require('../models/Movie');
 
 // --- Dashboard / List Movies ---
-// --- Dashboard Controller ---
 exports.getDashboard = async (req, res) => {
   try {
-    if (!req.session.userId) {
-      // If not logged in, redirect to login page
-      return res.redirect('/users/auth?mode=login');
-    }
-
-    // Fetch movies belonging to the logged-in user
-const movies = await Movie.find({ owner: req.session.userId }).sort({ createdAt: -1 });
-
-
-    // Render the dashboard with the movies
+    const movies = await Movie.find({ owner: req.session.userId }).sort({ createdAt: -1 });
     res.render('dashboard', { movies, userId: req.session.userId, message: null });
   } catch (err) {
-    console.error('Error fetching dashboard movies:', err);
+    console.error(err);
     res.status(500).send('Server error loading dashboard.');
   }
 };
@@ -43,7 +33,7 @@ exports.showMovie = async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     if (!movie) return res.status(404).send('Movie not found');
-    res.render('movies/show', { movie });
+    res.render('movies/show', { movie, userId: req.session.userId });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error fetching movie.');
@@ -55,6 +45,12 @@ exports.showEditForm = async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     if (!movie) return res.status(404).send('Movie not found');
+
+    // Ownership check
+    if (movie.owner.toString() !== req.session.userId) {
+      return res.status(403).send('Unauthorized');
+    }
+
     res.render('movies/edit', { movie });
   } catch (err) {
     console.error(err);
@@ -66,6 +62,14 @@ exports.showEditForm = async (req, res) => {
 exports.updateMovie = async (req, res) => {
   const { title, year, rating } = req.body;
   try {
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) return res.status(404).send('Movie not found');
+
+    // Ownership check
+    if (movie.owner.toString() !== req.session.userId) {
+      return res.status(403).send('Unauthorized');
+    }
+
     await Movie.findByIdAndUpdate(req.params.id, { title, year, rating });
     res.redirect(`/movies/${req.params.id}`);
   } catch (err) {
@@ -77,6 +81,14 @@ exports.updateMovie = async (req, res) => {
 // --- Delete Movie ---
 exports.deleteMovie = async (req, res) => {
   try {
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) return res.status(404).send('Movie not found');
+
+    // Ownership check
+    if (movie.owner.toString() !== req.session.userId) {
+      return res.status(403).send('Unauthorized');
+    }
+
     await Movie.findByIdAndDelete(req.params.id);
     res.redirect('/');
   } catch (err) {

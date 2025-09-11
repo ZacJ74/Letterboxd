@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= movie.title %></title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= movie.title %> - Movie Details</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <main>
-    <h1><%= movie.title %></h1>
-    <p><strong>Year:</strong> <%= movie.year %></p>
-    <p><strong>Rating:</strong> <%= movie.rating %></p>
+  <header>
+    <h1><%= movie.title %> (<%= movie.year %>)</h1>
+    <% if (userId && movie.owner.toString() === userId) { %>
+      <a href="/movies/<%= movie._id %>/edit">Edit</a>
+      <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+    <% } %>
+  </header>
 
-    <a href="/movies/<%= movie._id %>/edit">Edit</a>
-    <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
-      <button type="submit">Delete</button>
-    </form>
+  <main>
+    <p><strong>Rating:</strong> <%= movie.rating %> / 10</p>
+
     <a href="/">Back to Dashboard</a>
   </main>
 </body>
