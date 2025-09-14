@@ -1,10 +1,9 @@
-// models/Movie.js
 const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  year: Number,
-  rating: Number,
+  description: String,
+  imageUrl: String,   
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, { timestamps: true });
 

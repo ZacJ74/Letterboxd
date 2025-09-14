@@ -22,25 +22,25 @@
   </header>
 
   <main>
-    <% if (movies.length === 0) { %>
-      <p>No movies added yet.</p>
-    <% } else { %>
-      <ul>
-        <% movies.forEach(movie => { %>
-          <li>
-            <a href="/movies/<%= movie._id %>"><%= movie.title %> (<%= movie.year %>)</a>
-            <span>Rating: <%= movie.rating %></span>
-            
-            <% if (movie.owner.toString() === userId) { %>
-              <a href="/movies/<%= movie._id %>/edit">Edit</a>
-              <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
-                <button type="submit">Delete</button>
-              </form>
-            <% } %>
-          </li>
-        <% }) %>
-      </ul>
-    <% } %>
+    <h1>Your Watchlist</h1>
+
+<% if (movies.length === 0) { %>
+  <p>You haven’t added any movies yet.</p>
+<% } else { %>
+  <ul>
+    <% movies.forEach(movie => { %>
+      <li>
+        <strong><%= movie.title %></strong> (<%= movie.year %>)<br>
+        <% if (movie.imageUrl) { %>
+          <img src="<%= movie.imageUrl %>" alt="<%= movie.title %> poster" style="max-width:150px;">
+        <% } else { %>
+          <em>[No poster available]</em>
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
   </main>
 </body>
 </html>

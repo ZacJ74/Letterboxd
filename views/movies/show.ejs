@@ -9,6 +9,17 @@
 <body>
   <header>
     <h1><%= movie.title %> (<%= movie.year %>)</h1>
+
+<% if (movie.imageUrl) { %>
+  <img src="<%= movie.imageUrl %>" alt="<%= movie.title %> poster" style="max-width:200px;">
+<% } else { %>
+  <p>[No poster available]</p>
+<% } %>
+
+<p>Year: <%= movie.year %></p>
+<p>Rating: <%= movie.rating %></p>
+
+
     <% if (userId && movie.owner.toString() === userId) { %>
       <a href="/movies/<%= movie._id %>/edit">Edit</a>
       <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">

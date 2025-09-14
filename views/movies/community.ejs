@@ -20,18 +20,22 @@
   </header>
 
  <main>
-  <% if (Object.keys(moviesByUser).length === 0) { %>
-    <p>No movies yet.</p>
-  <% } else { %>
-    <% for (let username in moviesByUser) { %>
-      <h2><%= username %>'s Watchlist:</h2>
-      <ul>
-        <% moviesByUser[username].forEach(movie => { %>
-          <li><%= movie.title %> (<%= movie.year %>) - Rating: <%= movie.rating %></li>
-        <% }) %>
-      </ul>
-    <% } %>
-  <% } %>
+  <% Object.keys(moviesByUser).forEach(username => { %>
+  <h2><%= username %>’s Watchlist:</h2>
+  <ul>
+    <% moviesByUser[username].forEach(movie => { %>
+      <li>
+        <strong><%= movie.title %></strong> (<%= movie.year %>)<br>
+        <% if (movie.imageUrl) { %>
+          <img src="<%= movie.imageUrl %>" alt="<%= movie.title %> poster" style="max-width:150px;">
+        <% } else { %>
+          <em>[No poster available]</em>
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+<% }) %>
+
 </main>
 
 
