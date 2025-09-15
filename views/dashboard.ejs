@@ -8,32 +8,39 @@
   
 <%- include('partials/nav') %>
 
-  <h1>Your Dashboard</h1>
+<h1>Your Dashboard</h1>
 
-  <% if (movies.length === 0) { %>
-    <p>You haven’t added any movies yet. <a href="/movies/new">Add your first movie</a>.</p>
-  <% } else { %>
-    <div class="movie-list">
-      <% movies.forEach(movie => { %>
-        <div class="movie-card">
-          <% if (movie.imageUrl) { %>
-            <img src="<%= movie.imageUrl %>" alt="Poster for <%= movie.title %>">
-          <% } else { %>
-            <p>No poster available</p>
-          <% } %>
+<% if (movies.length === 0) { %>
+  <p>You haven’t added any movies yet. <a href="/movies/new">Add your first movie</a>.</p>
+<% } else { %>
+  <div class="movie-list">
+    <% movies.forEach(movie => { %>
+      <div class="movie-card">
+        <% if (movie.imageUrl) { %>
+          <img src="<%= movie.imageUrl %>" alt="Poster for <%= movie.title %>">
+        <% } else { %>
+          <p>No poster available</p>
+        <% } %>
 
-          <h3><a href="/movies/<%= movie._id %>"><%= movie.title %> (<%= movie.year %>)</a></h3>
-          <p>⭐ Rating: <%= movie.rating %></p>
+        <h3><a href="/movies/<%= movie._id %>"><%= movie.title %></a></h3>
+<% if (movie.year) { %>
+  <p class="movie-year">Year: <%= movie.year %></p>
+<% } %>
+<p>⭐ Rating: <%= movie.rating %></p>
 
-          <div>
-            <a href="/movies/<%= movie._id %>/edit" class="btn">Edit</a>
-            <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
-              <button type="submit">Delete</button>
-            </form>
-          </div>
+
+        <div class="movie-actions">
+          <!-- Edit button -->
+          <a href="/movies/<%= movie._id %>/edit" class="btn edit-btn">Edit</a>
+
+          <!-- Delete button -->
+          <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="delete-form">
+            <button type="submit" class="btn delete-btn">Delete</button>
+          </form>
         </div>
-      <% }) %>
-    </div>
-  <% } %>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
 </body>
 </html>

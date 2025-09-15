@@ -27,16 +27,28 @@
       <input type="text" id="imageUrl" name="imageUrl" value="<%= movie.imageUrl %>">
     </div>
 
-    <!-- Only one movie-actions block -->
-    <div class="movie-actions">
-      <button type="submit" class="btn">Update Movie</button>
+    <div class="movie-card">
+      <h2><%= movie.title %></h2>
+<% if (movie.year) { %>
+  <p class="movie-year">Year: <%= movie.year %></p>
+<% } %>
+<p>⭐ Rating: <%= movie.rating %></p>
 
-      <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
-        <button type="submit" class="btn delete">Delete Movie</button>
-      </form>
 
-      <a href="/" class="btn">Back to Dashboard</a>
-      <a href="/movies/community" class="btn">Back to Community</a>
+      <div class="edit-actions-top">
+        <!-- Update button -->
+        <button type="submit" class="btn update-btn">Update Movie</button>
+
+        <!-- Delete button -->
+        <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="delete-form">
+          <button type="submit" class="btn delete-btn">Delete Movie</button>
+        </form>
+      </div>
+
+      <div class="edit-actions-bottom">
+        <a href="/" class="btn back-btn">Back to Dashboard</a>
+        <a href="/movies/community" class="btn back-btn">Back to Community</a>
+      </div>
     </div>
   </form>
 </body>
