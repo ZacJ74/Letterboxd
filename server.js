@@ -37,9 +37,10 @@ app.use(session({
 
 // --- Make user available in all views ---
 app.use((req, res, next) => {
-  res.locals.userId = req.session.userId || null;
+  res.locals.user = req.session.userId || null;
   next();
 });
+
 
 // --- View Engine Configuration ---
 app.set('view engine', 'ejs');

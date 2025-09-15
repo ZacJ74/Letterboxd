@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,34 +7,39 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <nav>
-    <div>
-      <a href="/">Dashboard</a>
-      <a href="/movies/community">Community</a>
-    </div>
-    <div>
-      <a href="/users/logout" class="btn">Logout</a>
-    </div>
-  </nav>
+  <%- include('../partials/nav') %>   <!-- ✅ shared nav -->
 
-  <div class="movie-card" style="max-width: 500px; margin: auto;">
+
+  <div class="movie-card" style="max-width: 500px; margin: auto; text-align: center;">
+  <div class="movie-poster">
     <% if (movie.imageUrl) { %>
       <img src="<%= movie.imageUrl %>" alt="Poster for <%= movie.title %>">
     <% } else { %>
       <p>No poster available</p>
     <% } %>
+  </div>
 
+  <div class="movie-details">
     <h1><%= movie.title %> (<%= movie.year %>)</h1>
-    <p>⭐ Rating: <%= movie.rating %></p>
+    <p class="movie-rating">⭐ Rating: <%= movie.rating %></p>
 
-    <% if (movie.owner && movie.owner._id.toString() === userId) { %>
-      <div>
-        <a href="/movies/<%= movie._id %>/edit" class="btn">Edit</a>
-        <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline;">
-          <button type="submit">Delete</button>
-        </form>
-      </div>
-    <% } %>
+   <% if (movie.owner && movie.owner._id.toString() === userId) { %>
+  <div class="movie-actions">
+    <a href="/movies/<%= movie._id %>/edit" class="btn">Edit</a>
+    <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
+  </div>
+<% } %>
+
+
+    <div class="back-links">
+      <a href="/" class="btn">Back to Dashboard</a>
+      <a href="/movies/community" class="btn">Back to Community</a>
+    </div>
+  </div>
+</div>
+
 
     <div style="margin-top: 15px;">
       <a href="/" class="btn">Back to Dashboard</a>

@@ -1,30 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> - Reel Keeper</title>
-  <link rel="stylesheet" href="/styles.css">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <main>
-    <h1><%= title %></h1>
-    <% if (message) { %><p style="color:red"><%= message %></p><% } %>
+  <%- include('partials/nav') %>
+
+  <div class="auth-container">
+       <h1>
+      <% if (mode === 'login') { %>
+        Welcome back to ReelKeeper
+      <% } else { %>
+        Welcome to ReelKeeper
+      <% } %>
+    </h1>
+
+    <% if (message) { %>
+      <p class="error"><%= message %></p>
+    <% } %>
 
     <form action="/users/<%= mode %>" method="POST">
-      <label>Username</label>
-      <input type="text" name="username" required><br>
-      <label>Password</label>
-      <input type="password" name="password" required><br>
-      <button type="submit"><%= title %></button>
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn">
+        <%= mode === 'login' ? 'Login' : 'Sign Up' %>
+      </button>
     </form>
 
-    <% if (mode === 'signup') { %>
-      <p>Already have an account? <a href="/users/auth?mode=login">Login</a></p>
-    <% } else { %>
-      <p>Need an account? <a href="/users/auth?mode=signup">Sign Up</a></p>
-    <% } %>
-  </main>
+    <p class="auth-switch">
+      <% if (mode === 'login') { %>
+        Don’t have an account? <a href="/users/auth?mode=signup">Sign up here</a>.
+      <% } else { %>
+        Already have an account? <a href="/users/auth?mode=login">Login here</a>.
+      <% } %>
+    </p>
+  </div>
 </body>
 </html>
-

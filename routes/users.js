@@ -47,9 +47,21 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// POST logout
-router.post('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/users/auth?mode=login'));
+
+// Logout
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error(err);
+      return res.redirect('/dashboard'); // fallback if session destroy fails
+    }
+    res.redirect('/users/auth?mode=login'); // always go to login page
+  });
 });
+
+
+
+
+
 
 module.exports = router;
