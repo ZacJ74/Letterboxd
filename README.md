@@ -2,7 +2,7 @@
 
 # **ReelKeeper**
 
-A MERN-inspired Node/Express/MongoDB app that allows users to track, view, and manage their personal movie watchlist. Includes a community page to see other users’ movie lists.
+This is a MERN-inspired Node/Express/MongoDB app that allows users to track, view, and manage their personal movie watchlist. Includes a community page to see other users’ movie lists.
 
 ---
 
