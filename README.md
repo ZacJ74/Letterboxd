@@ -88,45 +88,14 @@ Logout                          POST /users/logout
 
 ---
 
-## **Getting Started**
 
-1. **Clone the repo**
-
-```bash
-git clone https://github.com/yourusername/letterboxd-clone.git
-cd letterboxd-clone
-```
-
-2. **Install dependencies**
-
-```bash
-npm install
-```
-
-3. **Setup environment variables**
-   Create a `.env` file with:
-
-```
-MONGODB_URI=your_mongo_uri_here
-SESSION_SECRET=your_secret_here
-PORT=3000
-```
-
-4. **Run the server**
-
-```bash
-npm start
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
 
 ## **Screenshots**
 
 **Login**
 
-![Login Screenshot] (assets/screenshots/login.png)
+![Login Screenshot](assets/screenshots/login.png)
+
 
 **Dashboard**
 
