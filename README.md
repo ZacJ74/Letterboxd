@@ -1,8 +1,6 @@
-Absolutely! Let’s structure a **complete README** for your project that is clean, professional, and includes route diagrams. I’ll draft it section by section and include the ASCII-style route diagrams (you can replace them with actual images if you deploy to GitHub).
 
----
 
-# **Letterboxd Clone**
+# **ReelKeeper**
 
 A MERN-inspired Node/Express/MongoDB app that allows users to track, view, and manage their personal movie watchlist. Includes a community page to see other users’ movie lists.
 
