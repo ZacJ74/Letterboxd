@@ -45,17 +45,25 @@ exports.showNewForm = (req, res) => {
   res.render('movies/new');
 };
 
+
 // --- Create Movie ---
 exports.createMovie = async (req, res) => {
-  const { title, year, rating } = req.body;
+  const { title, year, rating, imageUrl } = req.body;  // include imageUrl here
   try {
-    await Movie.create({ title, year, rating, owner: req.session.userId });
+    await Movie.create({ 
+      title, 
+      year, 
+      rating, 
+      owner: req.session.userId,
+      imageUrl // matches model + form field
+    });
     res.redirect('/');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error creating movie.');
   }
 };
+
 
 // --- Show Single Movie ---
 exports.showMovie = async (req, res) => {
@@ -88,8 +96,9 @@ exports.showEditForm = async (req, res) => {
 };
 
 // --- Update Movie ---
+
 exports.updateMovie = async (req, res) => {
-  const { title, year, rating } = req.body;
+  const { title, year, rating, imageUrl } = req.body;
   try {
     const movie = await Movie.findById(req.params.id);
     if (!movie) return res.status(404).send('Movie not found');
@@ -99,13 +108,15 @@ exports.updateMovie = async (req, res) => {
       return res.status(403).send('Unauthorized');
     }
 
-    await Movie.findByIdAndUpdate(req.params.id, { title, year, rating });
+    await Movie.findByIdAndUpdate(req.params.id, { title, year, rating, imageUrl });
     res.redirect(`/movies/${req.params.id}`);
   } catch (err) {
     console.error(err);
     res.status(500).send('Error updating movie.');
   }
 };
+
+
 
 // --- Delete Movie ---
 exports.deleteMovie = async (req, res) => {

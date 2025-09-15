@@ -1,43 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Movies - Reel Keeper</title>
-  <link rel="stylesheet" href="/styles.css">
+  <title>Community Movies</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Community Movies</h1>
-    <nav>
+  <nav>
+    <div>
       <a href="/">Dashboard</a>
-      <a href="/movies/new">New Movie</a>
       <a href="/movies/community">Community</a>
-      <form action="/users/logout" method="POST" style="display:inline">
-        <button type="submit">Logout</button>
-      </form>
-    </nav>
-  </header>
+    </div>
+    <div>
+      <a href="/users/logout" class="btn">Logout</a>
+    </div>
+  </nav>
 
- <main>
-  <% Object.keys(moviesByUser).forEach(username => { %>
-  <h2><%= username %>’s Watchlist:</h2>
-  <ul>
-    <% moviesByUser[username].forEach(movie => { %>
-      <li>
-        <strong><%= movie.title %></strong> (<%= movie.year %>)<br>
-        <% if (movie.imageUrl) { %>
-          <img src="<%= movie.imageUrl %>" alt="<%= movie.title %> poster" style="max-width:150px;">
-        <% } else { %>
-          <em>[No poster available]</em>
-        <% } %>
-      </li>
-    <% }) %>
-  </ul>
-<% }) %>
+  <h1>Community Watchlists</h1>
 
-</main>
+  <% if (Object.keys(moviesByUser).length === 0) { %>
+    <p>No movies have been added yet.</p>
+  <% } else { %>
+    <% for (let username in moviesByUser) { %>
+      <h2><%= username %>’s Watchlist</h2>
+      <div class="movie-list">
+        <% moviesByUser[username].forEach(movie => { %>
+          <div class="movie-card">
+            <% if (movie.imageUrl) { %>
+              <img src="<%= movie.imageUrl %>" alt="Poster for <%= movie.title %>">
+            <% } else { %>
+              <p>No poster available</p>
+            <% } %>
 
-
+            <h3><a href="/movies/<%= movie._id %>"><%= movie.title %> (<%= movie.year %>)</a></h3>
+            <p>⭐ Rating: <%= movie.rating %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  <% } %>
 </body>
 </html>
