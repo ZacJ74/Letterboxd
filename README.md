@@ -18,7 +18,7 @@ A MERN-inspired Node/Express/MongoDB app that allows users to track, view, and m
 6. [Getting Started](#getting-started)
 7. [Screenshots](#screenshots)
 8. [Next Steps](#next-steps)
-9. [Attributions](#attributions)
+
 
 ---
 
@@ -124,41 +124,24 @@ npm start
 
 ## **Screenshots**
 
-**Dashboard:**
+**Login**
 
-```
-[Username]'s Watchlist:
-- Movie 1
-- Movie 2
-```
+![Login Screenshot] (assets/screenshots/login.png)
+
+**Dashboard**
+
+![Dashboard Screenshot](assets/screenshots/dashboard.png)
 
 **Community Page:**
 
-```
-Zac's Watchlist:
-- Movie A
-- Movie B
+![Community Screenshot](assets/screenshots/community.png)
 
-OtherUser's Watchlist:
-- Movie C
-```
-
----
 
 ## **Next Steps (Stretch Goals)**
 
-* Add movie poster images
-* Implement rating stars
+
 * Add search/filter functionality on community page
 * Allow commenting on other users’ movies
-
----
-
-## **Attributions**
-
-* [EJS Documentation](https://ejs.co)
-* [Express Documentation](https://expressjs.com/)
-* [MongoDB Documentation](https://docs.mongodb.com/)
 
 ---
 
