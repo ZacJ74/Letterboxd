@@ -28,7 +28,7 @@ This app is a movie tracking platform where users can:
 * See a dashboard of their personal watchlist
 * Explore a community page showing movies added by all users (read-only for others’ movies)
 
-The project fulfills the General Assembly MEN Stack CRUD App MVP requirements, including session-based authentication, RESTful routing, full CRUD functionality, and proper authorization.
+
 
 ---
 
