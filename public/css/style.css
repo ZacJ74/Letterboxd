@@ -127,64 +127,10 @@ h1, .page-title {
   font-size: 1.2rem;
 }
 
-/* Dashboard Edit/Delete Buttons Alignment - NEW/CHANGED */
-.movie-actions {
-  display: flex;
-  justify-content: space-between; /* push edit left, delete right */
-  align-items: center;
-  width: 100%;                     /* full width of card */
-  margin-top: 15px;
-  gap: 12px;
-}
 
-/* Edit button */
-.movie-actions .edit-btn {
-  background-color: #4da6ff; /* light blue */
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 5px;
-  font-size: 1rem;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  flex-shrink: 0;
-  transition: background-color 0.2s ease;
-}
 
-.movie-actions .edit-btn:hover {
-  background-color: #3399ff;
-}
 
-/* Delete button container form */
-.movie-actions form.delete-form {
-  display: inline;           /* ensures form doesn't break layout */
-  margin: 0;
-  padding: 0;
-}
 
-/* Delete button */
-.movie-actions .delete-btn {
-  background-color: #dc3545; /* red */
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 5px;
-  height: 45px;
-  cursor: pointer;
-  border: none;
-  text-align: center;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  transition: background-color 0.2s ease;
-}
-
-.movie-actions .delete-btn:hover {
-  background-color: #a71d2a;
-}
 
 /* Edit Page Buttons - Top and Bottom */
 .edit-actions-top,
@@ -207,7 +153,7 @@ h1, .page-title {
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  flex: 1 1 48%; /* evenly stretch buttons */
+  flex: 1 1 48%; 
   transition: background-color 0.2s ease;
 }
 
@@ -232,56 +178,6 @@ h1, .page-title {
 }
 
 
-/* Shared button styling */
-.btn {
-  display: inline-block;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin: 5px;
-}
-
-/* Edit = same as other pages */
-.edit-btn {
-  background-color: #28a745; /* green */
-  color: white;
-}
-.edit-btn:hover {
-  background-color: #218838;
-}
-
-/* Delete = red */
-.delete-btn {
-  background-color: #dc3545;
-  color: white;
-}
-.delete-btn:hover {
-  background-color: #c82333;
-}
-
-/* Back links = same blue as your other buttons */
-.back-btn {
-  background-color: #007bff; /* blue */
-  color: white;
-}
-.back-btn:hover {
-  background-color: #0069d9;
-}
-
-/* Layout positioning */
-.movie-actions {
-  margin-top: 15px;
-  text-align: left;   /* ✅ align Edit/Delete to the left */
-}
-
-.back-links {
-  margin-top: 20px;
-  text-align: center; /* ✅ center Back buttons */
-}
 
 
 
@@ -353,4 +249,74 @@ input, textarea {
   font-size: 1rem;
   color: #555;
   margin-bottom: 20px;
+}
+
+
+
+
+/* Action button rows */
+.movie-actions {
+  display: flex;
+  justify-content: center;   /* center Edit + Delete */
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.back-links {
+  display: flex;
+  justify-content: center;   /* center Back buttons */
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Shared button base */
+.btn {
+  display: inline-flex;       /* inline-flex so text centers properly */
+  justify-content: center;
+  align-items: center;
+  height: 45px;               
+  padding: 0 20px;            
+  border: none;              
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin: 5px 0;
+}
+
+/* Edit button (green) */
+.edit-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+.edit-btn:hover {
+  background-color: #218838;
+}
+
+/* Delete button (red) */
+.delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Back buttons (blue) */
+.back-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+.back-btn:hover {
+  background-color: #0069d9;
+}
+
+/* Inline delete form to align with Edit button */
+.movie-actions form {
+  display: inline;   
+  margin: 0;         
+  padding: 0;
+  border: none;      
+  background: none;  
 }

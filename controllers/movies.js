@@ -110,7 +110,7 @@ exports.updateMovie = async (req, res) => {
 
     await Movie.findByIdAndUpdate(req.params.id, { title, year, rating, imageUrl });
 
-    // ✅ Redirect to dashboard after update
+    // Redirect to dashboard after update
     res.redirect('/');
   } catch (err) {
     console.error(err);
